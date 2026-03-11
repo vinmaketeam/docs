@@ -1,97 +1,108 @@
 ---
-title: "Introduction"
-description: "Welcome to the new home for your documentation"
+title: VinMake ERP API Documentation
+description: RESTful API for garment manufacturing management
 ---
 
-## Setting up
+# Welcome to VinMake ERP
 
-Get your documentation site up and running in minutes.
+VinMake is a comprehensive Enterprise Resource Planning (ERP) system designed specifically for **garment manufacturing businesses**. Our platform streamlines every aspect of production, from initial costing and material procurement to final delivery and invoicing.
 
-<Card
-  title="Start here"
-  icon="rocket"
-  href="/quickstart"
-  horizontal
->
-  Follow our three step quickstart guide.
-</Card>
+## What VinMake Does
 
-## Make it yours
+VinMake helps garment manufacturers manage their entire production workflow:
 
-Design a docs site that looks great and empowers your users.
-
-<Columns cols={2}>
-  <Card
-    title="Edit locally"
-    icon="pen-to-square"
-    href="/development"
-  >
-    Edit your docs locally and preview them in real time.
+<CardGroup cols={2}>
+  <Card title="Production Management" icon="industry">
+    Track production orders, manage production lines, and monitor real-time progress across your factory floor.
   </Card>
-  <Card
-    title="Customize your site"
-    icon="palette"
-    href="/essentials/settings"
-  >
-    Customize the design and colors of your site to match your brand.
+  
+  <Card title="Bill of Materials (BOM)" icon="list-check">
+    Create detailed BOMs with version control, material assignments, approval workflows, and cost tracking.
   </Card>
-    <Card
-    title="Set up navigation"
-    icon="map"
-    href="/essentials/navigation"
-  >
-    Organize your docs to help users find what they need and succeed with your product.
+  
+  <Card title="Material Management" icon="warehouse">
+    Manage fabric, trims, and accessories inventory with detailed specifications and supplier tracking.
   </Card>
-  <Card
-    title="API documentation"
-    icon="terminal"
-    href="/api-reference/introduction"
-  >
-    Auto-generate API documentation from OpenAPI specifications.
+  
+  <Card title="Costing & Budgets" icon="calculator">
+    Accurate labor cost estimation, direct/indirect cost tracking, and budget management for each order.
   </Card>
-</Columns>
+  
+  <Card title="Sales & Procurement" icon="cart-shopping">
+    Handle sales orders, purchase orders (direct and fixed cost), and delivery notes in one unified system.
+  </Card>
+  
+  <Card title="Financial Management" icon="money-bill-wave">
+    Issue invoices, track bills, manage bank statements, and maintain management accounts.
+  </Card>
+</CardGroup>
 
-## Create beautiful pages
+## Platform Features
 
-Everything you need to create world-class documentation.
+- **Multi-tenant Architecture** — Secure isolation for each client
+- **Role-based Access Control** — Client, Staff, and Admin user levels
+- **Real-time Updates** — WebSocket support for live data synchronization
+- **RESTful API** — Clean, predictable endpoints following OpenAPI 3.1 spec
+- **Supabase Auth** — Secure JWT-based authentication
 
-<Columns cols={2}>
-  <Card
-    title="Write with MDX"
-    icon="pen-fancy"
-    href="/essentials/markdown"
-  >
-    Use MDX to style your docs pages.
-  </Card>
-  <Card
-    title="Code samples"
-    icon="code"
-    href="/essentials/code"
-  >
-    Add sample code to demonstrate how to use your product.
-  </Card>
-  <Card
-    title="Images"
-    icon="image"
-    href="/essentials/images"
-  >
-    Display images and other media.
-  </Card>
-  <Card
-    title="Reusable snippets"
-    icon="recycle"
-    href="/essentials/reusable-snippets"
-  >
-    Write once and reuse across your docs.
-  </Card>
-</Columns>
+## Who Is This For?
 
-## Need inspiration?
+This API documentation is for **VinMake team members** who need to:
 
-<Card
-  title="See complete examples"
-  icon="stars"
-  href="https://mintlify.com/customers"
->
-  Browse our showcase of exceptional documentation sites.
-</Card>
+- Integrate VinMake with external systems
+- Build custom reports or dashboards
+- Automate workflows via scripts or webhooks
+- Extend the platform with custom features
+
+## Internal Use Only
+
+**Note:** This is an internal API documentation for the VinMake team. All endpoints require authentication and appropriate role permissions.
+
+## Getting Started
+
+<CardGroup cols={2}>
+  <Card title="Quickstart" icon="rocket" href="/quickstart">
+    Learn how to authenticate and make your first API call
+  </Card>
+  
+  <Card title="Authentication" icon="key" href="/authentication">
+    Detailed guide on JWT tokens and Supabase Auth
+  </Card>
+  
+  <Card title="API Reference" icon="book" href="/api-reference">
+    Browse all available endpoints organized by module
+  </Card>
+  
+  <Card title="Staging App" icon="browser" href="https://staging.cutmake.ai">
+    Access the VinMake staging environment
+  </Card>
+</CardGroup>
+
+## API Overview
+
+The VinMake API is organized into functional modules:
+
+- **Authentication** — Login and password reset
+- **Clients** — Customer management
+- **Materials** — Fabric, trims, accessories inventory
+- **BOM** — Bill of materials with versioning
+- **Production** — Production orders and production lines
+- **Sales Orders** — Customer orders and delivery notes
+- **Purchase Orders** — Direct cost and fixed cost procurement
+- **Financial** — Invoices, bills, bank statements, budgets
+- **System** — API keys, webhooks, user management
+
+All endpoints follow the `/api/v1/` prefix for consistent versioning.
+
+## Base URL
+
+```
+https://staging.cutmake.ai
+```
+
+## Support
+
+For questions or issues, contact the VinMake development team:
+
+- **Email:** thai@vinmake.com
+- **Staging App:** [staging.cutmake.ai](https://staging.cutmake.ai)

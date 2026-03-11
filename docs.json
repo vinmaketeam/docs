@@ -1,88 +1,14 @@
 {
   "$schema": "https://mintlify.com/docs.json",
+  "name": "VinMake ERP API",
+  "openapi": "/api-reference/openapi.json",
   "theme": "mint",
-  "name": "Mint Starter Kit",
   "colors": {
     "primary": "#16A34A",
     "light": "#07C983",
     "dark": "#15803D"
   },
   "favicon": "/favicon.svg",
-  "navigation": {
-    "tabs": [
-      {
-        "tab": "Guides",
-        "groups": [
-          {
-            "group": "Getting started",
-            "pages": [
-              "index",
-              "quickstart",
-              "development"
-            ]
-          },
-          {
-            "group": "Customization",
-            "pages": [
-              "essentials/settings",
-              "essentials/navigation"
-            ]
-          },
-          {
-            "group": "Writing content",
-            "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/reusable-snippets"
-            ]
-          },
-          {
-            "group": "AI tools",
-            "pages": [
-              "ai-tools/cursor",
-              "ai-tools/claude-code",
-              "ai-tools/windsurf"
-            ]
-          }
-        ]
-      },
-      {
-        "tab": "API reference",
-        "groups": [
-          {
-            "group": "API documentation",
-            "pages": [
-              "api-reference/introduction"
-            ]
-          },
-          {
-            "group": "Endpoint examples",
-            "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
-            ]
-          }
-        ]
-      }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
-        }
-      ]
-    }
-  },
   "logo": {
     "light": "/logo/light.svg",
     "dark": "/logo/dark.svg"
@@ -90,33 +16,261 @@
   "navbar": {
     "links": [
       {
-        "label": "Support",
-        "href": "mailto:hi@mintlify.com"
+        "label": "Staging App",
+        "href": "https://staging.cutmake.ai"
       }
-    ],
-    "primary": {
-      "type": "button",
-      "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
-    }
+    ]
   },
-  "contextual": {
-    "options": [
-     "copy",
-     "view",
-     "chatgpt",
-     "claude",
-     "perplexity",
-     "mcp",
-     "cursor",
-     "vscode"
-   ]
-  },
-  "footer": {
-    "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
-    }
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Guides",
+        "groups": [
+          {
+            "group": "Getting Started",
+            "pages": [
+              "index",
+              "quickstart",
+              "authentication"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "API Reference",
+        "groups": [
+          {
+            "group": "Authentication",
+            "pages": [
+              "openapi: POST /api/v1/auth/reset-password-request"
+            ]
+          },
+          {
+            "group": "API Keys",
+            "pages": [
+              "openapi: GET /api/v1/api-keys",
+              "openapi: POST /api/v1/api-keys",
+              "openapi: POST /api/v1/api-keys/{api_key_id}/revoke"
+            ]
+          },
+          {
+            "group": "Clients",
+            "pages": [
+              "openapi: GET /api/v1/clients",
+              "openapi: POST /api/v1/clients",
+              "openapi: GET /api/v1/clients/{client_id}",
+              "openapi: PUT /api/v1/clients/{client_id}",
+              "openapi: DELETE /api/v1/clients/{client_id}"
+            ]
+          },
+          {
+            "group": "Materials",
+            "pages": [
+              "openapi: GET /api/v1/materials",
+              "openapi: POST /api/v1/materials",
+              "openapi: GET /api/v1/materials/next-ref",
+              "openapi: GET /api/v1/materials/{material_id}",
+              "openapi: PUT /api/v1/materials/{material_id}",
+              "openapi: DELETE /api/v1/materials/{material_id}",
+              "openapi: GET /api/v1/materials/{material_id}/detail",
+              "openapi: GET /api/v1/materials/{mid}",
+              "openapi: PUT /api/v1/materials/{mid}",
+              "openapi: DELETE /api/v1/materials/{mid}"
+            ]
+          },
+          {
+            "group": "BOM",
+            "pages": [
+              "openapi: GET /api/v1/bom",
+              "openapi: POST /api/v1/bom",
+              "openapi: GET /api/v1/bom/{bom_id}",
+              "openapi: PUT /api/v1/bom/{bom_id}",
+              "openapi: DELETE /api/v1/bom/{bom_id}",
+              "openapi: POST /api/v1/bom/{bom_id}/approve",
+              "openapi: POST /api/v1/bom/{bom_id}/reject",
+              "openapi: POST /api/v1/bom/{bom_id}/submit",
+              "openapi: GET /api/v1/bom/{bom_id}/usage",
+              "openapi: GET /api/v1/bom/{bom_id}/versions",
+              "openapi: GET /api/v1/bom/{bom_id}/versions/{version_a}/compare/{version_b}",
+              "openapi: POST /api/v1/bom/{bom_id}/withdraw",
+              "openapi: POST /api/v1/bom/versions/{version_id}/line-items",
+              "openapi: PUT /api/v1/bom/line-items/{line_item_id}",
+              "openapi: DELETE /api/v1/bom/line-items/{line_item_id}",
+              "openapi: POST /api/v1/bom/line-items/{line_item_id}/assign-material"
+            ]
+          },
+          {
+            "group": "Production Orders",
+            "pages": [
+              "openapi: GET /api/v1/production-orders",
+              "openapi: POST /api/v1/production-orders",
+              "openapi: GET /api/v1/production-orders/{order_id}",
+              "openapi: PUT /api/v1/production-orders/{order_id}",
+              "openapi: DELETE /api/v1/production-orders/{order_id}"
+            ]
+          },
+          {
+            "group": "Production Lines",
+            "pages": [
+              "openapi: GET /api/v1/production-lines",
+              "openapi: POST /api/v1/production-lines",
+              "openapi: GET /api/v1/production-lines/{production_line_id}",
+              "openapi: PUT /api/v1/production-lines/{production_line_id}",
+              "openapi: DELETE /api/v1/production-lines/{production_line_id}",
+              "openapi: POST /api/v1/production-lines/{production_line_id}/toggle"
+            ]
+          },
+          {
+            "group": "Bills",
+            "pages": [
+              "openapi: GET /api/v1/bills",
+              "openapi: POST /api/v1/bills",
+              "openapi: GET /api/v1/bills/{bill_id}",
+              "openapi: PUT /api/v1/bills/{bill_id}",
+              "openapi: DELETE /api/v1/bills/{bill_id}"
+            ]
+          },
+          {
+            "group": "Invoices",
+            "pages": [
+              "openapi: GET /api/v1/invoices",
+              "openapi: POST /api/v1/invoices",
+              "openapi: GET /api/v1/invoices/{invoice_id}",
+              "openapi: PUT /api/v1/invoices/{invoice_id}",
+              "openapi: DELETE /api/v1/invoices/{invoice_id}"
+            ]
+          },
+          {
+            "group": "Sales Orders",
+            "pages": [
+              "openapi: GET /api/v1/orders",
+              "openapi: POST /api/v1/orders",
+              "openapi: GET /api/v1/orders/{order_id}",
+              "openapi: PUT /api/v1/orders/{order_id}",
+              "openapi: DELETE /api/v1/orders/{order_id}",
+              "openapi: GET /api/v1/orders/{document_id}",
+              "openapi: DELETE /api/v1/orders/{document_id}"
+            ]
+          },
+          {
+            "group": "Delivery Notes",
+            "pages": [
+              "openapi: GET /api/v1/delivery-notes",
+              "openapi: POST /api/v1/delivery-notes",
+              "openapi: GET /api/v1/delivery-notes/{note_id}",
+              "openapi: PUT /api/v1/delivery-notes/{note_id}",
+              "openapi: DELETE /api/v1/delivery-notes/{note_id}"
+            ]
+          },
+          {
+            "group": "Direct Cost Purchase Orders",
+            "pages": [
+              "openapi: GET /api/v1/purchase-orders/direct-cost",
+              "openapi: POST /api/v1/purchase-orders/direct-cost",
+              "openapi: GET /api/v1/purchase-orders/direct-cost/{document_id}",
+              "openapi: PUT /api/v1/purchase-orders/direct-cost/{document_id}",
+              "openapi: DELETE /api/v1/purchase-orders/direct-cost/{document_id}"
+            ]
+          },
+          {
+            "group": "Fixed Cost Purchase Orders",
+            "pages": [
+              "openapi: GET /api/v1/purchase-orders/fixed-cost",
+              "openapi: POST /api/v1/purchase-orders/fixed-cost",
+              "openapi: GET /api/v1/purchase-orders/fixed-cost/{document_id}",
+              "openapi: PUT /api/v1/purchase-orders/fixed-cost/{document_id}",
+              "openapi: DELETE /api/v1/purchase-orders/fixed-cost/{document_id}"
+            ]
+          },
+          {
+            "group": "Bank Statements",
+            "pages": [
+              "openapi: GET /api/v1/bank-statements",
+              "openapi: POST /api/v1/bank-statements",
+              "openapi: GET /api/v1/bank-statements/{statement_id}",
+              "openapi: PUT /api/v1/bank-statements/{statement_id}",
+              "openapi: DELETE /api/v1/bank-statements/{statement_id}"
+            ]
+          },
+          {
+            "group": "Management Accounts",
+            "pages": [
+              "openapi: GET /api/v1/management-accounts",
+              "openapi: POST /api/v1/management-accounts",
+              "openapi: GET /api/v1/management-accounts/{account_id}",
+              "openapi: PUT /api/v1/management-accounts/{account_id}",
+              "openapi: DELETE /api/v1/management-accounts/{account_id}"
+            ]
+          },
+          {
+            "group": "Budgets",
+            "pages": [
+              "openapi: GET /api/v1/budget",
+              "openapi: POST /api/v1/budget",
+              "openapi: GET /api/v1/budget/{budget_id}",
+              "openapi: PUT /api/v1/budget/{budget_id}",
+              "openapi: DELETE /api/v1/budget/{budget_id}"
+            ]
+          },
+          {
+            "group": "Labor Cost",
+            "pages": [
+              "openapi: GET /api/v1/labor-cost/compare",
+              "openapi: POST /api/v1/labor-cost/estimate"
+            ]
+          },
+          {
+            "group": "Styles",
+            "pages": [
+              "openapi: GET /api/v1/styles",
+              "openapi: POST /api/v1/styles",
+              "openapi: GET /api/v1/styles/{style_id}",
+              "openapi: PUT /api/v1/styles/{style_id}",
+              "openapi: DELETE /api/v1/styles/{style_id}"
+            ]
+          },
+          {
+            "group": "SKUs",
+            "pages": [
+              "openapi: GET /api/v1/skus",
+              "openapi: POST /api/v1/skus",
+              "openapi: GET /api/v1/skus/{sku_id}",
+              "openapi: PUT /api/v1/skus/{sku_id}",
+              "openapi: DELETE /api/v1/skus/{sku_id}"
+            ]
+          },
+          {
+            "group": "Suppliers",
+            "pages": [
+              "openapi: GET /api/v1/suppliers",
+              "openapi: POST /api/v1/suppliers",
+              "openapi: GET /api/v1/suppliers/{supplier_id}",
+              "openapi: PUT /api/v1/suppliers/{supplier_id}",
+              "openapi: DELETE /api/v1/suppliers/{supplier_id}"
+            ]
+          },
+          {
+            "group": "Users",
+            "pages": [
+              "openapi: GET /api/v1/users",
+              "openapi: POST /api/v1/users",
+              "openapi: GET /api/v1/users/{user_id}",
+              "openapi: PUT /api/v1/users/{user_id}",
+              "openapi: DELETE /api/v1/users/{user_id}"
+            ]
+          },
+          {
+            "group": "Webhooks",
+            "pages": [
+              "openapi: GET /api/v1/webhooks",
+              "openapi: POST /api/v1/webhooks",
+              "openapi: GET /api/v1/webhooks/{webhook_id}",
+              "openapi: PUT /api/v1/webhooks/{webhook_id}",
+              "openapi: DELETE /api/v1/webhooks/{webhook_id}"
+            ]
+          }
+        ]
+      }
+    ]
   }
 }

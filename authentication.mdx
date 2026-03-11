@@ -1,0 +1,409 @@
+---
+title: Authentication
+description: Complete guide to VinMake API authentication using JWT tokens
+---
+
+# Authentication
+
+VinMake uses **Supabase Auth** with JWT (JSON Web Tokens) for secure API access. All API endpoints (except `/auth/login`) require authentication.
+
+## Authentication Flow
+
+<Steps>
+  <Step title="Login">
+    Send your email and password to `/auth/login` to receive an access token
+  </Step>
+  
+  <Step title="Store Token">
+    Save the `access_token` securely (never commit to version control)
+  </Step>
+  
+  <Step title="Include in Requests">
+    Add the token to the `Authorization` header for all API calls
+  </Step>
+  
+  <Step title="Refresh When Expired">
+    Re-authenticate when you receive a `401 Unauthorized` response
+  </Step>
+</Steps>
+
+## Login Endpoint
+
+**Endpoint:** `POST /auth/login`
+
+**Content-Type:** `application/x-www-form-urlencoded`
+
+**Request Body:**
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `username` | string | Yes | Your email address |
+| `password` | string | Yes | Your password |
+
+<Note>
+  Use the field name `username` even though the value is an email address. This follows OAuth2 password flow conventions.
+</Note>
+
+**Example Request:**
+
+```bash
+curl -X POST https://staging.cutmake.ai/auth/login \
+  -H "Content-Type: application/x-www-form-urlencoded" \
+  -d "username=thai@vinmake.com" \
+  -d "password=your-secure-password"
+```
+
+**Success Response (200):**
+
+```json
+{
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLXV1aWQiLCJlbWFpbCI6InRoYWlAdmlubWFrZS5jb20iLCJyb2xlIjoiYWRtaW4iLCJleHAiOjE3MTA1MjM2MDB9.signature",
+  "token_type": "bearer",
+  "expires_in": 3600,
+  "user": {
+    "id": "uuid-here",
+    "email": "thai@vinmake.com",
+    "role": "admin",
+    "app_metadata": {},
+    "user_metadata": {}
+  }
+}
+```
+
+**Error Response (401):**
+
+```json
+{
+  "detail": "Invalid credentials"
+}
+```
+
+## Using the Access Token
+
+Include the token in the `Authorization` header with the `Bearer` scheme:
+
+```bash
+curl https://staging.cutmake.ai/api/v1/clients \
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
+```
+
+## Token Expiration
+
+- **Lifetime:** 1 hour (3600 seconds)
+- **Refresh Strategy:** Re-authenticate when you receive a `401` response
+- **Best Practice:** Implement automatic token refresh in your client
+
+<Warning>
+  Access tokens expire after 1 hour. There is currently no refresh token mechanism — you must re-authenticate with your email and password.
+</Warning>
+
+## Role-Based Access Control
+
+VinMake has three user roles, each with different permissions:
+
+### Client Role
+
+**Access Level:** Limited
+
+- Can only view and manage their own data
+- Cannot access other clients' information
+- Cannot perform admin operations
+
+**Typical Use Case:** External customers who need read-only access to their orders and invoices
+
+### Staff Role
+
+**Access Level:** Standard
+
+- Full CRUD access to most resources (materials, BOMs, production orders, etc.)
+- Can view all clients' data
+- Cannot manage users or system-wide settings
+
+**Typical Use Case:** VinMake team members working on production, procurement, or operations
+
+### Admin Role
+
+**Access Level:** Full
+
+- Complete access to all resources
+- Can manage users and permissions
+- Can access system administration endpoints (API keys, webhooks, etc.)
+- Can perform backups and other privileged operations
+
+**Typical Use Case:** VinMake founders, CTO, system administrators
+
+## Authorization Errors
+
+When you don't have permission to access a resource:
+
+**Response (403 Forbidden):**
+
+```json
+{
+  "detail": "Insufficient permissions"
+}
+```
+
+**Response (401 Unauthorized):**
+
+```json
+{
+  "detail": "Not authenticated"
+}
+```
+
+## Password Reset
+
+**Endpoint:** `POST /api/v1/auth/reset-password-request`
+
+Request a password reset email:
+
+```bash
+curl -X POST https://staging.cutmake.ai/api/v1/auth/reset-password-request \
+  -H "Content-Type: application/json" \
+  -d '{"email": "your-email@example.com"}'
+```
+
+<Note>
+  This sends a password reset email via Supabase Auth. Follow the link in the email to set a new password.
+</Note>
+
+## Security Best Practices
+
+<AccordionGroup>
+  <Accordion title="Never commit tokens to version control">
+    Store credentials in environment variables or secure vaults:
+    
+    ```bash
+    export VINMAKE_EMAIL="your-email@example.com"
+    export VINMAKE_PASSWORD="your-password"
+    ```
+  </Accordion>
+  
+  <Accordion title="Use HTTPS only">
+    All VinMake API endpoints use HTTPS. Never send credentials over HTTP.
+  </Accordion>
+  
+  <Accordion title="Implement token refresh logic">
+    Don't wait for a `401` error in the middle of a critical operation. Proactively refresh tokens before they expire:
+    
+    ```python
+    from datetime import datetime, timedelta
+    
+    class TokenManager:
+        def __init__(self):
+            self.token = None
+            self.expires_at = None
+        
+        def is_expired(self):
+            return not self.token or datetime.now() >= self.expires_at
+        
+        def should_refresh(self, buffer_seconds=300):
+            # Refresh 5 minutes before expiration
+            return datetime.now() >= self.expires_at - timedelta(seconds=buffer_seconds)
+    ```
+  </Accordion>
+  
+  <Accordion title="Rotate credentials regularly">
+    Change your password periodically, especially if:
+    - You suspect credentials have been compromised
+    - A team member with access leaves the company
+    - Tokens were accidentally logged or exposed
+  </Accordion>
+  
+  <Accordion title="Use API keys for automation">
+    For scripts and integrations, consider using API keys (managed via `/api/v1/api-keys` endpoint) instead of user passwords. API keys can be:
+    - Revoked without changing user passwords
+    - Scoped to specific permissions
+    - Monitored independently
+  </Accordion>
+</AccordionGroup>
+
+## API Keys (Alternative to User Auth)
+
+For automation and integrations, VinMake supports API keys:
+
+**Create an API Key:**
+
+```bash
+curl -X POST https://staging.cutmake.ai/api/v1/api-keys \
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Production Sync Script",
+    "scopes": ["read:materials", "write:production-orders"]
+  }'
+```
+
+**Use an API Key:**
+
+```bash
+curl https://staging.cutmake.ai/api/v1/materials \
+  -H "X-API-Key: your-api-key-here"
+```
+
+<Tip>
+  API keys are ideal for:
+  - CI/CD pipelines
+  - Scheduled scripts
+  - Third-party integrations
+  - Service accounts
+</Tip>
+
+**Revoke an API Key:**
+
+```bash
+curl -X POST https://staging.cutmake.ai/api/v1/api-keys/{api_key_id}/revoke \
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
+```
+
+## Testing Authentication
+
+Use these test endpoints to verify your authentication and check your role:
+
+**Test Client Role:**
+
+```bash
+curl https://staging.cutmake.ai/auth/test/client \
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
+```
+
+**Test Staff Role:**
+
+```bash
+curl https://staging.cutmake.ai/auth/test/staff \
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
+```
+
+**Test Admin Role:**
+
+```bash
+curl https://staging.cutmake.ai/auth/test/admin \
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
+```
+
+Each endpoint returns `200 OK` only if you have the required role level or higher.
+
+## Example: Python Client with Auto-Refresh
+
+Here's a complete example of a Python client with automatic token refresh:
+
+```python
+import requests
+from datetime import datetime, timedelta
+from typing import Optional
+
+class VinMakeAPI:
+    def __init__(self, email: str, password: str, base_url: str = "https://staging.cutmake.ai"):
+        self.email = email
+        self.password = password
+        self.base_url = base_url
+        self.token: Optional[str] = None
+        self.token_expires: Optional[datetime] = None
+    
+    def _login(self) -> None:
+        """Authenticate and store access token."""
+        response = requests.post(
+            f"{self.base_url}/auth/login",
+            data={"username": self.email, "password": self.password}
+        )
+        response.raise_for_status()
+        
+        data = response.json()
+        self.token = data["access_token"]
+        expires_in = data.get("expires_in", 3600)
+        self.token_expires = datetime.now() + timedelta(seconds=expires_in)
+    
+    def _get_headers(self) -> dict:
+        """Get headers with valid access token."""
+        # Refresh token if expired or expiring soon (5 min buffer)
+        if not self.token or datetime.now() >= self.token_expires - timedelta(minutes=5):
+            self._login()
+        
+        return {"Authorization": f"Bearer {self.token}"}
+    
+    def get(self, path: str, **kwargs) -> requests.Response:
+        """Make authenticated GET request."""
+        return requests.get(
+            f"{self.base_url}{path}",
+            headers=self._get_headers(),
+            **kwargs
+        )
+    
+    def post(self, path: str, **kwargs) -> requests.Response:
+        """Make authenticated POST request."""
+        return requests.post(
+            f"{self.base_url}{path}",
+            headers=self._get_headers(),
+            **kwargs
+        )
+    
+    def put(self, path: str, **kwargs) -> requests.Response:
+        """Make authenticated PUT request."""
+        return requests.put(
+            f"{self.base_url}{path}",
+            headers=self._get_headers(),
+            **kwargs
+        )
+    
+    def delete(self, path: str, **kwargs) -> requests.Response:
+        """Make authenticated DELETE request."""
+        return requests.delete(
+            f"{self.base_url}{path}",
+            headers=self._get_headers(),
+            **kwargs
+        )
+
+# Usage
+api = VinMakeAPI(
+    email="thai@vinmake.com",
+    password="your-password"
+)
+
+# Fetch clients
+response = api.get("/api/v1/clients")
+clients = response.json()
+
+# Create a material
+response = api.post("/api/v1/materials", json={
+    "name": "Cotton Fabric",
+    "type": "fabric",
+    "unit": "yards"
+})
+material = response.json()
+```
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="401 Unauthorized - Token expired">
+    **Solution:** Re-authenticate to get a fresh token. Implement automatic refresh logic to prevent this.
+  </Accordion>
+  
+  <Accordion title="401 Unauthorized - Invalid credentials">
+    **Solution:** Double-check your email and password. Ensure you're using the correct account.
+  </Accordion>
+  
+  <Accordion title="403 Forbidden - Insufficient permissions">
+    **Solution:** Your user role doesn't have access to this endpoint. Contact an admin to upgrade your permissions, or use an account with appropriate role.
+  </Accordion>
+  
+  <Accordion title="Missing Authorization header">
+    **Solution:** Ensure you're including the header in every request:
+    ```
+    Authorization: Bearer YOUR_ACCESS_TOKEN
+    ```
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Quickstart" icon="rocket" href="/quickstart">
+    Make your first authenticated API call
+  </Card>
+  
+  <Card title="API Reference" icon="book" href="/api-reference">
+    Explore all available endpoints
+  </Card>
+</CardGroup>
