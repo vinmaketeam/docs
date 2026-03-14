@@ -18,6 +18,10 @@
       {
         "label": "Staging App",
         "href": "https://staging.cutmake.ai"
+      },
+      {
+        "label": "Production App",
+        "href": "https://erp.cutmake.ai"
       }
     ]
   },
@@ -44,5 +48,13 @@
   },
   "background": {
     "decoration": "gradient"
+  },
+  "footer": {
+    "socials": {
+      "website": "https://vinmake.com"
+    }
+  },
+  "search": {
+    "prompt": "Search an end point..."
   }
 }
