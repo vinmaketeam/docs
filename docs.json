@@ -9,8 +9,9 @@
   },
   "favicon": "/favicon.svg",
   "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
+    "light": "/images/Group130.png",
+    "dark": "/images/Group155.png",
+    "href": "https://docs.cutmake.ai"
   },
   "navbar": {
     "links": [
@@ -40,5 +41,8 @@
         "openapi": "api-reference/openapi.json"
       }
     ]
+  },
+  "background": {
+    "decoration": "gradient"
   }
 }
