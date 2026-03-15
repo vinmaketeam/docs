@@ -1,0 +1,58 @@
+---
+title: General Ledger
+description: GL queries, trial balance, and reports
+---
+
+# General Ledger
+
+Query the General Ledger for trial balances, account balances, and financial reports.
+
+## Trial Balance
+
+Returns debit and credit totals for all accounts.
+
+```bash
+GET /api/v1/gl/trial-balance
+Authorization: Bearer <access_token>
+```
+
+**Response (200):**
+```json
+{
+  "as_of": "2026-03-15",
+  "accounts": [
+    {
+      "code": "1000",
+      "name": "Cash",
+      "debit": 1500000,
+      "credit": 500000,
+      "balance": 1000000
+    }
+  ],
+  "total_debit": 1500000,
+  "total_credit": 1500000
+}
+```
+
+<Info>
+  In a properly maintained ledger, total debits always equal total credits.
+</Info>
+
+## Account Balance
+
+Get the running balance for a specific account.
+
+```bash
+GET /api/v1/gl/accounts/:id/balance
+Authorization: Bearer <access_token>
+```
+
+**Response (200):**
+```json
+{
+  "account_code": "1000",
+  "account_name": "Cash",
+  "balance": 1000000,
+  "currency": "VND"
+}
+```

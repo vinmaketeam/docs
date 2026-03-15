@@ -1,0 +1,76 @@
+---
+title: Chart of Accounts
+description: Manage GL accounts
+---
+
+# Chart of Accounts
+
+Manage your General Ledger accounts — create, list, and retrieve accounts with multi-currency support.
+
+## List Accounts
+
+```bash
+GET /api/v1/gl/accounts
+Authorization: Bearer <access_token>
+```
+
+**Response (200):**
+```json
+[
+  {
+    "id": "uuid",
+    "code": "1000",
+    "name": "Cash",
+    "type": "asset",
+    "currency": "VND"
+  }
+]
+```
+
+## Create Account
+
+<ParamField body="code" type="string" required>
+  Unique account code (e.g. "1000")
+</ParamField>
+
+<ParamField body="name" type="string" required>
+  Account name (e.g. "Cash")
+</ParamField>
+
+<ParamField body="type" type="string" required>
+  Account type: `asset`, `liability`, `equity`, `revenue`, `expense`
+</ParamField>
+
+<ParamField body="currency" type="string">
+  ISO currency code (default: VND)
+</ParamField>
+
+```bash
+POST /api/v1/gl/accounts
+Authorization: Bearer <access_token>
+
+{
+  "code": "1000",
+  "name": "Cash",
+  "type": "asset",
+  "currency": "VND"
+}
+```
+
+**Response (201):**
+```json
+{
+  "id": "uuid",
+  "code": "1000",
+  "name": "Cash",
+  "type": "asset",
+  "currency": "VND"
+}
+```
+
+## Get Account
+
+```bash
+GET /api/v1/gl/accounts/:id
+Authorization: Bearer <access_token>
+```

@@ -1,0 +1,40 @@
+---
+title: Welcome to Indygo
+description: AI-native accounting platform for Southeast Asia
+---
+
+# Indygo API Documentation
+
+Indygo is an AI-native accounting platform built for businesses in Southeast Asia. The MVP, **Indygo Books**, provides automated real-time General Ledger functionality, replacing Excel-based bookkeeping.
+
+## Core Modules
+
+<CardGroup cols={2}>
+  <Card title="Authentication" icon="lock" href="/indygo/staging/authentication">
+    Sign up, login, and manage user sessions via JWT tokens.
+  </Card>
+  <Card title="Chart of Accounts" icon="list" href="/indygo/staging/chart-of-accounts">
+    Create and manage GL accounts with multi-currency support.
+  </Card>
+  <Card title="Journal Entries" icon="pen" href="/indygo/staging/journal-entries">
+    Post balanced journal entries with debit/credit lines.
+  </Card>
+  <Card title="General Ledger" icon="book" href="/indygo/staging/general-ledger">
+    Query trial balance, account balances, and GL reports.
+  </Card>
+</CardGroup>
+
+## Base URLs
+
+| Environment | URL |
+|-------------|-----|
+| Staging | `https://api.staging.indygo.ai/api/v1` |
+| Production | `https://api.indygo.ai/api/v1` |
+
+## Authentication
+
+All endpoints (except signup and login) require a Bearer token:
+
+```bash
+curl -H "Authorization: Bearer <access_token>" https://api.staging.indygo.ai/api/v1/gl/accounts
+```

@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "name": "VinMake ERP API",
+  "name": "VinMake Docs",
   "theme": "mint",
   "colors": {
     "primary": "#3F00FF",
@@ -26,7 +26,29 @@
         },
         "versions": [
           {
-            "version": "0.1.0"
+            "version": "0.1.0",
+            "tabs": [
+              {
+                "tab": "Guides",
+                "groups": [
+                  {
+                    "group": "Getting Started",
+                    "pages": [
+                      "indygo/staging/index",
+                      "indygo/staging/authentication"
+                    ]
+                  },
+                  {
+                    "group": "Core Modules",
+                    "pages": [
+                      "indygo/staging/chart-of-accounts",
+                      "indygo/staging/journal-entries",
+                      "indygo/staging/general-ledger"
+                    ]
+                  }
+                ]
+              }
+            ]
           }
         ]
       },
@@ -80,6 +102,6 @@
     }
   },
   "search": {
-    "prompt": "Search an end point..."
+    "prompt": "Search docs..."
   }
 }

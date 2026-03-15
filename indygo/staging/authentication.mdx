@@ -1,0 +1,79 @@
+---
+title: Authentication
+description: Sign up, login, and manage sessions
+---
+
+# Authentication
+
+Indygo uses JWT-based authentication via Supabase Auth.
+
+## Sign Up
+
+<ParamField body="email" type="string" required>
+  User's email address
+</ParamField>
+
+<ParamField body="password" type="string" required>
+  Password (minimum 6 characters)
+</ParamField>
+
+<ParamField body="name" type="string">
+  User's full name
+</ParamField>
+
+```bash
+POST /api/v1/auth/signup
+
+{
+  "email": "user@example.com",
+  "password": "securepass123",
+  "name": "Jane Doe"
+}
+```
+
+**Response (201):**
+```json
+{
+  "id": "uuid",
+  "email": "user@example.com",
+  "name": "Jane Doe"
+}
+```
+
+## Login
+
+```bash
+POST /api/v1/auth/login
+
+{
+  "email": "user@example.com",
+  "password": "securepass123"
+}
+```
+
+**Response (200):**
+```json
+{
+  "access_token": "eyJ...",
+  "token_type": "bearer",
+  "email": "user@example.com",
+  "role": "User"
+}
+```
+
+## Get Current User
+
+```bash
+GET /api/v1/auth/me
+Authorization: Bearer <access_token>
+```
+
+**Response (200):**
+```json
+{
+  "id": "uuid",
+  "email": "user@example.com",
+  "name": "Jane Doe",
+  "role": "User"
+}
+```

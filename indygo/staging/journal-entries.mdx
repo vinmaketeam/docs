@@ -1,0 +1,67 @@
+---
+title: Journal Entries
+description: Create and manage journal entries
+---
+
+# Journal Entries
+
+Post balanced journal entries to the General Ledger. Every entry must have at least 2 lines where total debits equal total credits.
+
+## List Journal Entries
+
+```bash
+GET /api/v1/gl/journal-entries
+Authorization: Bearer <access_token>
+```
+
+## Create Journal Entry
+
+<ParamField body="date" type="string" required>
+  Entry date in YYYY-MM-DD format
+</ParamField>
+
+<ParamField body="memo" type="string">
+  Description of the journal entry
+</ParamField>
+
+<ParamField body="lines" type="array" required>
+  Array of debit/credit lines (minimum 2, must balance)
+</ParamField>
+
+```bash
+POST /api/v1/gl/journal-entries
+Authorization: Bearer <access_token>
+
+{
+  "date": "2026-03-15",
+  "memo": "Office supplies purchase",
+  "lines": [
+    { "account_code": "5100", "debit": 500000, "credit": 0 },
+    { "account_code": "1000", "debit": 0, "credit": 500000 }
+  ]
+}
+```
+
+**Response (201):**
+```json
+{
+  "id": "uuid",
+  "date": "2026-03-15",
+  "memo": "Office supplies purchase",
+  "lines": [
+    { "account_code": "5100", "debit": 500000, "credit": 0 },
+    { "account_code": "1000", "debit": 0, "credit": 500000 }
+  ]
+}
+```
+
+<Warning>
+  Journal entries must balance — total debits must equal total credits. Unbalanced entries return 422.
+</Warning>
+
+## Get Journal Entry
+
+```bash
+GET /api/v1/gl/journal-entries/:id
+Authorization: Bearer <access_token>
+```
