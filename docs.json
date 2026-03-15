@@ -14,35 +14,47 @@
     "href": "https://docs.cutmake.ai"
   },
   "navbar": {
-    "links": [
-      {
-        "label": "Staging App",
-        "href": "https://staging.cutmake.ai"
-      },
-      {
-        "label": "Production App",
-        "href": "https://erp.cutmake.ai"
-      }
-    ]
+    "links": []
   },
   "navigation": {
-    "tabs": [
+    "products": [
       {
-        "tab": "Guides",
-        "groups": [
+        "product": "Cutmake AI",
+        "tabs": [
           {
-            "group": "Getting Started",
-            "pages": [
-              "index",
-              "quickstart",
-              "authentication"
+            "tab": "Guides",
+            "groups": [
+              {
+                "group": "Getting Started",
+                "pages": [
+                  "index",
+                  "quickstart",
+                  "authentication"
+                ]
+              }
             ]
+          },
+          {
+            "tab": "API Reference",
+            "openapi": "api-reference/openapi.json"
           }
         ]
       },
       {
-        "tab": "API Reference",
-        "openapi": "api-reference/openapi.json"
+        "product": "Indygo AI",
+        "anchors": [
+          {
+            "anchor": "Staging",
+            "dropdowns": [
+              {
+                "dropdown": "test"
+              }
+            ]
+          },
+          {
+            "anchor": "Production"
+          }
+        ]
       }
     ]
   },
