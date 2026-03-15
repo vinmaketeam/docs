@@ -3,15 +3,15 @@
   "name": "VinMake ERP API",
   "theme": "mint",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#3F00FF",
+    "light": "#6576FF",
+    "dark": "#2C00BE"
   },
   "favicon": "/images/Frame1244.png",
   "logo": {
     "light": "/images/Group130.png",
     "dark": "/images/Group155.png",
-    "href": "https://docs.cutmake.ai"
+    "href": "https://docs.vinmake.com"
   },
   "navbar": {
     "links": []
@@ -19,42 +19,55 @@
   "navigation": {
     "products": [
       {
-        "product": "Cutmake AI",
-        "tabs": [
+        "product": "Indygo (staging)",
+        "color": {
+          "light": "#3F00FF",
+          "dark": "#3F00FF"
+        },
+        "versions": [
           {
-            "tab": "Guides",
-            "groups": [
-              {
-                "group": "Getting Started",
-                "pages": [
-                  "index",
-                  "quickstart",
-                  "authentication"
-                ]
-              }
-            ]
-          },
-          {
-            "tab": "API Reference",
-            "openapi": "api-reference/openapi.json"
+            "version": "0.1.0"
           }
         ]
       },
       {
-        "product": "Indygo AI",
-        "anchors": [
+        "product": "Indygo (prod)",
+        "color": {
+          "light": "#3F00FF",
+          "dark": "#3F00FF"
+        },
+        "hidden": true
+      },
+      {
+        "product": "Cutmake (staging)",
+        "versions": [
           {
-            "anchor": "Staging",
-            "dropdowns": [
+            "version": "0.1.0",
+            "tabs": [
               {
-                "dropdown": "test"
+                "tab": "Guides",
+                "groups": [
+                  {
+                    "group": "Getting Started",
+                    "pages": [
+                      "index",
+                      "quickstart",
+                      "authentication"
+                    ]
+                  }
+                ]
+              },
+              {
+                "tab": "API Reference",
+                "openapi": "api-reference/openapi.json"
               }
             ]
-          },
-          {
-            "anchor": "Production"
           }
         ]
+      },
+      {
+        "product": "Cutmake (prod)",
+        "hidden": true
       }
     ]
   },
