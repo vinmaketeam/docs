@@ -1,0 +1,193 @@
+---
+title: Quickstart
+description: Make your first API call to VinMake ERP in under 5 minutes
+---
+
+# Quickstart Guide
+
+Get up and running with the VinMake API in just a few steps.
+
+## Prerequisites
+
+Before you begin, make sure you have:
+
+- A VinMake account (contact thai@vinmake.com if you don't have one)
+- Your email and password
+- A terminal or API client (we'll use `curl` examples)
+
+## Step 1: Authenticate
+
+First, obtain an access token by logging in:
+
+```bash
+curl -X POST https://staging.cutmake.ai/auth/login \
+  -H "Content-Type: application/x-www-form-urlencoded" \
+  -d "username=your-email@example.com" \
+  -d "password=your-password"
+```
+
+<Note>
+  Use `username` field for your email address (this is OAuth2 convention).
+</Note>
+
+**Response:**
+
+```json
+{
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "token_type": "bearer",
+  "expires_in": 3600,
+  "user": {
+    "id": "uuid-here",
+    "email": "your-email@example.com",
+    "role": "staff"
+  }
+}
+```
+
+Save the `access_token` — you'll need it for all subsequent requests.
+
+## Step 2: Make Your First API Call
+
+Now use the token to fetch the list of clients:
+
+```bash
+curl https://staging.cutmake.ai/api/v1/clients \
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
+```
+
+**Response:**
+
+```json
+[
+  {
+    "id": "client-uuid",
+    "name": "Acme Garments",
+    "email": "contact@acme.com",
+    "created_at": "2024-01-15T10:30:00Z"
+  }
+]
+```
+
+<Check>
+  **Success!** You've made your first authenticated API call.
+</Check>
+
+## Step 3: Explore Other Endpoints
+
+Try fetching materials:
+
+```bash
+curl https://staging.cutmake.ai/api/v1/materials \
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
+```
+
+Or get production orders:
+
+```bash
+curl https://staging.cutmake.ai/api/v1/production-orders \
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
+```
+
+## Common Use Cases
+
+<CardGroup cols={2}>
+  <Card title="List Resources" icon="list">
+    Most endpoints support `GET` to list all items:
+    ```
+    GET /api/v1/materials
+    GET /api/v1/clients
+    GET /api/v1/bills
+    ```
+  </Card>
+  
+  <Card title="Get Single Item" icon="magnifying-glass">
+    Access specific items by ID:
+    ```
+    GET /api/v1/materials/{material_id}
+    GET /api/v1/clients/{client_id}
+    GET /api/v1/bills/{bill_id}
+    ```
+  </Card>
+  
+  <Card title="Create Resources" icon="plus">
+    Create new items with `POST`:
+    ```
+    POST /api/v1/materials
+    POST /api/v1/clients
+    POST /api/v1/bom
+    ```
+  </Card>
+  
+  <Card title="Update Resources" icon="pen">
+    Update existing items with `PUT`:
+    ```
+    PUT /api/v1/materials/{material_id}
+    PUT /api/v1/clients/{client_id}
+    PUT /api/v1/bills/{bill_id}
+    ```
+  </Card>
+</CardGroup>
+
+## Authentication Tips
+
+<Warning>
+  Access tokens expire after 1 hour. When you receive a `401 Unauthorized` response, re-authenticate to get a fresh token.
+</Warning>
+
+For long-running scripts, implement token refresh logic:
+
+```python
+import requests
+from datetime import datetime, timedelta
+
+class VinMakeClient:
+    def __init__(self, email, password):
+        self.email = email
+        self.password = password
+        self.base_url = "https://staging.cutmake.ai"
+        self.token = None
+        self.token_expires = None
+    
+    def login(self):
+        response = requests.post(
+            f"{self.base_url}/auth/login",
+            data={"username": self.email, "password": self.password}
+        )
+        data = response.json()
+        self.token = data["access_token"]
+        self.token_expires = datetime.now() + timedelta(seconds=data["expires_in"])
+    
+    def get_headers(self):
+        if not self.token or datetime.now() >= self.token_expires:
+            self.login()
+        return {"Authorization": f"Bearer {self.token}"}
+    
+    def get(self, path):
+        return requests.get(
+            f"{self.base_url}{path}",
+            headers=self.get_headers()
+        )
+
+# Usage
+client = VinMakeClient("your-email@example.com", "your-password")
+response = client.get("/api/v1/clients")
+clients = response.json()
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Authentication Guide" icon="key" href="/authentication">
+    Learn about JWT tokens, role permissions, and security best practices
+  </Card>
+  
+  <Card title="API Reference" icon="book" href="/api-reference">
+    Explore all endpoints with detailed request/response schemas
+  </Card>
+</CardGroup>
+
+## Need Help?
+
+- **Email:** thai@vinmake.com
+- **Staging App:** [staging.cutmake.ai](https://staging.cutmake.ai)

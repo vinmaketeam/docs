@@ -72,16 +72,16 @@
                   {
                     "group": "Getting Started",
                     "pages": [
-                      "index",
-                      "quickstart",
-                      "authentication"
+                      "cutmake/staging/index",
+                      "cutmake/staging/quickstart",
+                      "cutmake/staging/authentication"
                     ]
                   }
                 ]
               },
               {
                 "tab": "API Reference",
-                "openapi": "api-reference/openapi.json"
+                "openapi": "cutmake/staging/api-reference/openapi.json"
               }
             ]
           }

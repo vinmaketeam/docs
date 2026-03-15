@@ -1,0 +1,108 @@
+---
+title: VinMake ERP API Documentation
+description: RESTful API for garment manufacturing management
+---
+
+# Welcome to VinMake ERP
+
+VinMake is a comprehensive Enterprise Resource Planning (ERP) system designed specifically for **garment manufacturing businesses**. Our platform streamlines every aspect of production, from initial costing and material procurement to final delivery and invoicing.
+
+## What VinMake Does
+
+VinMake helps garment manufacturers manage their entire production workflow:
+
+<CardGroup cols={2}>
+  <Card title="Production Management" icon="industry">
+    Track production orders, manage production lines, and monitor real-time progress across your factory floor.
+  </Card>
+  
+  <Card title="Bill of Materials (BOM)" icon="list-check">
+    Create detailed BOMs with version control, material assignments, approval workflows, and cost tracking.
+  </Card>
+  
+  <Card title="Material Management" icon="warehouse">
+    Manage fabric, trims, and accessories inventory with detailed specifications and supplier tracking.
+  </Card>
+  
+  <Card title="Costing & Budgets" icon="calculator">
+    Accurate labor cost estimation, direct/indirect cost tracking, and budget management for each order.
+  </Card>
+  
+  <Card title="Sales & Procurement" icon="cart-shopping">
+    Handle sales orders, purchase orders (direct and fixed cost), and delivery notes in one unified system.
+  </Card>
+  
+  <Card title="Financial Management" icon="money-bill-wave">
+    Issue invoices, track bills, manage bank statements, and maintain management accounts.
+  </Card>
+</CardGroup>
+
+## Platform Features
+
+- **Multi-tenant Architecture** — Secure isolation for each client
+- **Role-based Access Control** — Client, Staff, and Admin user levels
+- **Real-time Updates** — WebSocket support for live data synchronization
+- **RESTful API** — Clean, predictable endpoints following OpenAPI 3.1 spec
+- **Supabase Auth** — Secure JWT-based authentication
+
+## Who Is This For?
+
+This API documentation is for **VinMake team members** who need to:
+
+- Integrate VinMake with external systems
+- Build custom reports or dashboards
+- Automate workflows via scripts or webhooks
+- Extend the platform with custom features
+
+## Internal Use Only
+
+**Note:** This is an internal API documentation for the VinMake team. All endpoints require authentication and appropriate role permissions.
+
+## Getting Started
+
+<CardGroup cols={2}>
+  <Card title="Quickstart" icon="rocket" href="/quickstart">
+    Learn how to authenticate and make your first API call
+  </Card>
+  
+  <Card title="Authentication" icon="key" href="/authentication">
+    Detailed guide on JWT tokens and Supabase Auth
+  </Card>
+  
+  <Card title="API Reference" icon="book" href="/api-reference">
+    Browse all available endpoints organized by module
+  </Card>
+  
+  <Card title="Staging App" icon="browser" href="https://staging.cutmake.ai">
+    Access the VinMake staging environment
+  </Card>
+</CardGroup>
+
+## API Overview
+
+The VinMake API is organized into functional modules:
+
+- **Authentication** — Login and password reset
+- **Clients** — Customer management
+- **Materials** — Fabric, trims, accessories inventory
+- **BOM** — Bill of materials with versioning
+- **Production** — Production orders and production lines
+- **Sales Orders** — Customer orders and delivery notes
+- **Purchase Orders** — Direct cost and fixed cost procurement
+- **Financial** — Invoices, bills, bank statements, budgets
+- **System** — API keys, webhooks, user management
+
+All endpoints follow the `/api/v1/` prefix for consistent versioning.
+
+## Base URL
+
+```
+https://staging.cutmake.ai
+```
+
+## Support
+
+For questions or issues, contact the VinMake development team:
+
+- **Email:** thai@vinmake.com
+- **Staging App:** [staging.cutmake.ai](https://staging.cutmake.ai)
