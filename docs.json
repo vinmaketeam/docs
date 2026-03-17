@@ -3,11 +3,11 @@
   "name": "VinMake Docs",
   "theme": "mint",
   "colors": {
-    "primary": "#3F00FF",
-    "light": "#6576FF",
-    "dark": "#2C00BE"
+    "primary": "#24496b",
+    "light": "#446d92",
+    "dark": "#071f35"
   },
-  "favicon": "/images/Frame1245.png",
+  "favicon": "/images/Frame1246.png",
   "logo": {
     "light": "/images/Group130.png",
     "dark": "/images/Group155.png",
@@ -21,8 +21,8 @@
       {
         "product": "Indygo (staging)",
         "color": {
-          "light": "#3F00FF",
-          "dark": "#3F00FF"
+          "light": "#446d92",
+          "dark": "#446d92"
         },
         "versions": [
           {
@@ -55,8 +55,8 @@
       {
         "product": "Indygo (prod)",
         "color": {
-          "light": "#3F00FF",
-          "dark": "#3F00FF"
+          "light": "#446d92",
+          "dark": "#446d92"
         },
         "hidden": true
       },
