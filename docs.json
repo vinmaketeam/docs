@@ -81,7 +81,7 @@
               },
               {
                 "tab": "API Reference",
-                "openapi": "cutmake/staging/api-reference/openapi.json"
+                "openapi": "https://staging.cutmake.ai/openapi.json"
               }
             ]
           }
